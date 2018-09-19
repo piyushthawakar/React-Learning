@@ -1,3 +1,4 @@
+// Creating a central Store
 import { createStore } from 'redux';
 import rootReducer from '../reducers/index';
 
