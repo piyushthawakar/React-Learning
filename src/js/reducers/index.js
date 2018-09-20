@@ -1,6 +1,4 @@
-// root Reducer
-// A simple State
-
+/*
 import { ADD_ARTICLE } from "../constants/action-types";
 
 const initialState = {
@@ -24,4 +22,13 @@ const rootReducer = (state = initialState, action ) => {
     }
 };
 
-export default rootReducer;
+export default rootReducer;*/
+
+
+import { combineReducers } from 'redux';
+import { items, itemsHasErrored, itemsIsLoading } from './items';
+export default combineReducers({
+    items,
+    itemsHasErrored,
+    itemsIsLoading
+});

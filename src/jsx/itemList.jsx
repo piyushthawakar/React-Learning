@@ -1,49 +1,38 @@
-import React from 'react';
-
-export default class ItemList extends React.Component{
-    GetChangeEvent() {
-        alert(1);
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { itemsFetchData } from '../js/actions/items';
+class ItemList extends Component {
+    componentDidMount() {
+        this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
     }
-    render(){
+    render() {
+        if (this.props.hasErrored) {
+            return <p>Sorry! There was an error loading the items</p>;
+        }
+        if (this.props.isLoading) {
+            return <p>Loading…</p>;
+        }
         return (
-            <div>
-                <ol>
-                    <li>
-                    <span>
-                        <input type="checkbox" className="GetCheckBox" />
-                    </span>
-                        <span text="Name1">
-                            {this.props.text}
-                    </span>
+            <ul>
+                {this.props.items.map((item) => (
+                    <li key={item.id}>
+                        {item.label}
                     </li>
-                    <li>
-                    <span>
-                        <input type="checkbox" className="GetCheckBox" />
-                    </span>
-                        <span text="Name2">
-                            {this.props.text}
-                    </span>
-                    </li>
-                    <li>
-                    <span>
-                        <input type="checkbox" className="GetCheckBox" />
-                    </span>
-                        <span text="Name3">
-                            {this.props.text}
-                    </span>
-                    </li>
-                    <li>
-                    <span>
-                        <input type="checkbox" className="GetCheckBox" />
-                    </span>
-                        <span text="Name4">
-                            {this.props.text}
-                    </span>
-                    </li>
-                </ol>
-
-                <input type="text" className="GetInputValue" onChange={this.GetChangeEvent}/>
-            </div>
+                ))}
+            </ul>
         );
-    };
+    }
 }
+const mapStateToProps = (state) => {
+    return {
+        items: state.items,
+        hasErrored: state.itemsHasErrored,
+        isLoading: state.itemsIsLoading
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchData: (url) => dispatch(itemsFetchData(url))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
