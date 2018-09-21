@@ -1,4 +1,4 @@
-import { ITEMS_HAS_ERRORED, ITEMS_IS_LOADING, ITEMS_FETCH_DATA_SUCCESS } from '../constants/action-types';
+import {ITEMS_FETCH_DATA_SUCCESS, ITEMS_HAS_ERRORED, ITEMS_IS_LOADING} from '../constants/action-types';
 
 export function itemsHasErrored(state = false, action) {
     switch (action.type) {
@@ -9,8 +9,8 @@ export function itemsHasErrored(state = false, action) {
     }
 }
 
-export function itemsIsLoading( state = false, action ) {
-    switch(action.type) {
+export function itemsIsLoading(state = false, action) {
+    switch (action.type) {
         case ITEMS_IS_LOADING:
             return action.isLoading;
         default:

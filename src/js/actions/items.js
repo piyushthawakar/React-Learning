@@ -1,4 +1,4 @@
-import { ITEMS_HAS_ERRORED, ITEMS_IS_LOADING, ITEMS_FETCH_DATA_SUCCESS } from '../constants/action-types';
+import {ITEMS_FETCH_DATA_SUCCESS, ITEMS_HAS_ERRORED, ITEMS_IS_LOADING} from '../constants/action-types';
 
 export function itemsHasErrored(bool) {
     return {
@@ -15,38 +15,27 @@ export function itemsIsLoading(bool) {
 }
 
 export function itemsFetchDataSuccess(items) {
-    return {
-        type: ITEMS_FETCH_DATA_SUCCESS,
-        items
-    };
-}
-
-export function errorAfterFiveSeconds() {
-    // We return a function instead of an action object
-    return (dispatch) => {
-        setTimeout( () => {
-            // This function is able to dispatch other action creators
-            dispatch(itemsHasErrored(true));
-        }, 5000);
+    return{
+      type: ITEMS_FETCH_DATA_SUCCESS,
+      items
     };
 }
 
 export function itemsFetchData(url) {
-    return(dispatch) => {
-       dispatch(itemsIsLoading(true));
+    return (dispatch) => {
+      dispatch(itemsIsLoading(true));
 
-       fetch(url)
-           .then((response) => {
-               if(!response.ok) {
-                   throw Error(response.statusText);
-               }
-               dispatch(itemsIsLoading(false));
-               return response;
-           })
-           .then((response) => response.json())
-           .then((items) => dispatch(itemsFetchDataSuccess(items)))
-           .catch(() => dispatch(itemsHasErrored(true)));
+      fetch(url)
+          .then((response) => {
+              if(!response.ok) {
+                  throw Error (response.statusText);
+              }
+              dispatch(itemsIsLoading(false));
+              return response;
+          })
+          .then((response) => response.json())
+          .then((items) =>
+              dispatch(itemsFetchDataSuccess(items)))
+          .catch(() => dispatch(itemsHasErrored(true)));
     };
 }
-
-export default {itemsHasErrored, itemsIsLoading, itemsFetchDataSuccess, errorAfterFiveSeconds, itemsFetchData };

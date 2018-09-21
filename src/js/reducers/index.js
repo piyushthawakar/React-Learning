@@ -24,11 +24,11 @@ const rootReducer = (state = initialState, action ) => {
 
 export default rootReducer;*/
 
+import {items, itemsHasErrored, itemsIsLoading } from './items';
+import {combineReducers} from 'redux';
 
-import { combineReducers } from 'redux';
-import { items, itemsHasErrored, itemsIsLoading } from './items';
 export default combineReducers({
     items,
-    itemsHasErrored,
-    itemsIsLoading
+    itemsIsLoading,
+    itemsHasErrored
 });

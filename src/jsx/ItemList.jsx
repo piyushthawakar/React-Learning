@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { itemsFetchData } from '../js/actions/items';
-class ItemList extends Component {
-    componentDidMount() {
+import React from 'react';
+import {connect} from 'react-redux';
+import {itemsFetchData} from "../js/actions/items";
+
+class ItemList extends React.Component {
+    componentDidMount(){
         this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
     }
+
     render() {
         if (this.props.hasErrored) {
             return <p>Sorry! There was an error loading the items</p>;
@@ -16,7 +18,8 @@ class ItemList extends Component {
             <ul>
                 {this.props.items.map((item) => (
                     <li key={item.id}>
-                        {item.label}
+                        <span>{item.label}</span>
+                        <span>{item.id}</span>
                     </li>
                 ))}
             </ul>
